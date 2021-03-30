@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 public class SwipeActivity extends AppCompatActivity {
     ImageView imageView;
@@ -62,6 +63,11 @@ public class SwipeActivity extends AppCompatActivity {
         swipe = new Swipe();
 
         db = new Data(SwipeActivity.this);
+        List<Swipe> list = db.getSwipeInfo();
+        for (int i = 0; i < list.size(); i++)   {
+            Swipe sw = list.get(i);
+            Log.d(TAG, swipe.getStartPointX() + swipe.getStartPointY() + "");
+        }
 
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
