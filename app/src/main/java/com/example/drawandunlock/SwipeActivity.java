@@ -15,6 +15,10 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.SaveCallback;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,11 +67,11 @@ public class SwipeActivity extends AppCompatActivity {
         swipe = new Swipe();
 
         db = new Data(SwipeActivity.this);
-        List<Swipe> list = db.getSwipeInfo();
-        for (int i = 0; i < list.size(); i++)   {
-            Swipe sw = list.get(i);
-            Log.d(TAG, swipe.getStartPointX() + swipe.getStartPointY() + "");
-        }
+//        List<Swipe> list = db.getSwipeInfo();
+//        for (int i = 0; i < list.size(); i++)   {
+//            Swipe sw = list.get(i);
+//            Log.d(TAG, swipe.getStartPointX() + swipe.getStartPointY() + "");
+//        }
 
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -102,7 +106,10 @@ public class SwipeActivity extends AppCompatActivity {
                             Log.d(TAG, "start  point: " + swipe.getStartPointX() + " " + swipe.getStartPointY());
                             Log.d(TAG, "Duration and Pressure: " + swipe.getDuration() + " " + swipe.getPressure());
                             Log.d(TAG, "End Points: " + swipe.getEndPointX() + " " + swipe.getEndPointY());
-                            if (swipe.getPressure() != 0)   db.addSwipe(swipe, getApplicationContext());
+                            if (swipe.getPressure() != 0)   {
+                                db.addSwipe(swipe, getApplicationContext());
+                                addToServer();
+                            }
                         }
 
                         return false;
@@ -110,9 +117,28 @@ public class SwipeActivity extends AppCompatActivity {
                 });
             }
 
+            private void addToServer() {
+
+            }
+
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+                ParseObject parseObject = new ParseObject("Swipe");
+                parseObject.add("start_point_x", swipe.getStartPointX());
+                parseObject.add("start_point_y", swipe.getStartPointY());
+                parseObject.add("duration", swipe.getDuration());
+                parseObject.add("pressure", swipe.getPressure());
+                parseObject.add("end_point_x", swipe.getEndPointX());
+                parseObject.add("end_point_y", swipe.getEndPointY());
 
+                parseObject.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e == null)  {
+                            Toast.makeText(getApplicationContext(), "Tweet uploaded", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
             }
 
         });

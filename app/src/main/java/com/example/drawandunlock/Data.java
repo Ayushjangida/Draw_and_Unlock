@@ -34,6 +34,7 @@ public class Data extends SQLiteOpenHelper {
 
     public Data(@Nullable Context context) {
         super(context, SwipeConstants.DATABASE_NAME, null, SwipeConstants.DATABASE_VERSION);
+
         this.context = context;
     }
 
@@ -73,8 +74,10 @@ public class Data extends SQLiteOpenHelper {
         values.put(SwipeConstants.END_POINT_Y, swipe.getEndPointY());
 
         db.insert(SwipeConstants.TABLE_SWIPES, null, values);
+
         String string = swipe.getStartPointX() + "," + swipe.getStartPointY() + "," + swipe.getDuration() + "," + swipe.getPressure()
         + "," + swipe.getEndPointX() + "," + swipe.getEndPointY();
+        Log.d(TAG, string);
         try {
             FileOutputStream fos = context.openFileOutput(fileName, Context.MODE_PRIVATE);
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fos);

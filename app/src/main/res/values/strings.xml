@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Draw and Unlock</string>
+
+    <string name="back4app_server_url">https://parseapi.back4app.com</string>
+    <string name="back4app_app_id">rwLieIE7H2IUhbMsi9LdNgM5Xrw7DDqO7LKSlCdT</string>
+    <string name="back4app_client_key">4HQIYaMUj5gLAv3J157fUc20pcR95yF49Yp76tdg</string>
 </resources>

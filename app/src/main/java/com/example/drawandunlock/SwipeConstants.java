@@ -1,7 +1,7 @@
 package com.example.drawandunlock;
 
 public class SwipeConstants {
-    public static final int DATABASE_VERSION = 9;
+    public static final int DATABASE_VERSION = 11;
     public static final String DATABASE_NAME = "swipe_table";
     public static final String TABLE_SWIPES = "swipes";
 
